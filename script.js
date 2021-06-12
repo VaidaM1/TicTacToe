@@ -1,4 +1,3 @@
-let payerWins = 0;
 
 document.addEventListener('click', function (event) {
   var target = event.target; // targetas paclikintas elementas
@@ -18,7 +17,7 @@ function resetGame() {
 
 function makeMove(element) {
   if (element.classList.contains("cell") && element.innerText == "" && !isGameFinished()){
-    index.innerText = "X";
+    element.innerText = "X";
 
     let finished = isGameFinished();
 
@@ -43,12 +42,16 @@ function opponentMove() {
 
   // Get random number
   // let randomNumber = Math.floor(Math.random()*(cells.length))
-  let randomNumber = Math.floor(Math.random() * (cells.length));
+  let randomNumber = Math.floor(Math.random()*(cells.length));
   ////let randomNo = randomInteger(0, elements.lenth);
   // Select random element
   let randomCell = cells[randomNumber];
   //and modify its innertext to O
   randomCell.innerText = "0";
+}
+
+function isGameFinished(){
+  return isWinnerDetermined() || noMovesLeft();
 }
 
 function noMovesLeft() {
@@ -62,6 +65,7 @@ function noMovesLeft() {
   }
   return false; //the game continues
 }
+
 
 function isWinnerDetermined() {
   let winningCellCombination = [
@@ -97,11 +101,8 @@ function isWinnerDetermined() {
       elementValue1 != ""
     ) {
       var gameStatusElement = document.querySelector(".game--status");
-      if (elementValue1 == "x") {
-       payerWins++;
-      }
-
-      gameStatusElement.innerText = `${elementValue1} has won the game ${payerWins}`;
+  
+      gameStatusElement.innerText = `${elementValue1} has won the game`;
 
       isWinnerDetermined = true;
     }
@@ -111,7 +112,7 @@ function isWinnerDetermined() {
   //carefull of empty values
 
   //1.we have 3 X or 3 O in a row, column or diagonal
-  return falisWinnerDeterminedse;
+  return isWinnerDetermined;
 }
 
 function getElementByIndex(index) {
